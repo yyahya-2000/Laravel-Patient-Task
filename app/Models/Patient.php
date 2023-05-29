@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\ValidationException;
 
 class Patient extends Model
 {
@@ -17,10 +18,8 @@ class Patient extends Model
         'age_type',
     ];
 
-    public static function createPatient(string $firstName, string $lastName, $birthdate)
+    public static function createPatient(string $firstName, string $lastName, $birthdate): static
     {
-        $birthdate = Carbon::parse($birthdate);
-
         $age = self::calculateAge($birthdate);
         $ageType = self::defineAgeType($birthdate);
 
